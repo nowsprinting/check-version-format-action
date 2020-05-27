@@ -29,7 +29,7 @@ e.g. `v1`, `v1.2`, `v2.3.4`
 ## Example usage
 
 ```yaml
-- uses: actions/check-version-format-action@v1
+- uses: nowsprinting/check-version-format-action@v1
   id: version
   with:
     prefix: 'v'
