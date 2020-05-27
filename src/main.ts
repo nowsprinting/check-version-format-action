@@ -1,16 +1,25 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const prefix: string = core.getInput('prefix')
+    core.debug(`prefix: ${prefix}`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const versionRegexpBase = `^refs/tags/${prefix}([0-9]+(\\.[0-9]+)*`
+    const versionRegexp = RegExp(`${versionRegexpBase}-.*$)`)
+    if (github.context.ref.match(versionRegexp) != null) {
+      core.setOutput('is_valid', true.toString())
+    } else {
+      core.setOutput('is_valid', false.toString())
+    }
 
-    core.setOutput('time', new Date().toTimeString())
+    const stableRegexp = RegExp(`${versionRegexpBase}$)`)
+    if (github.context.ref.match(stableRegexp) != null) {
+      core.setOutput('is_stable', true.toString())
+    } else {
+      core.setOutput('is_stable', false.toString())
+    }
   } catch (error) {
     core.setFailed(error.message)
   }

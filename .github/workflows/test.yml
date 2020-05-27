@@ -19,5 +19,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: ./
+      id: version
       with: 
-        milliseconds: 1000
+        prefix: v
+    - name: valid version only step
+      run: echo Found valid version format in tag!
+      if: steps.version.outputs.is_valid == 'true'
+    - name: Stable version only step
+      run: echo Found stable version in tag!
+      if: steps.version.outputs.is_stable == 'true'

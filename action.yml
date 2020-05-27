@@ -1,10 +1,19 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Check Version Format in Tag'
+description: 'Check version format in tag'
+author: 'nowsprinting'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  prefix:
+    description: 'Version prefix in tag. `refs/tags/` is unnecessary.'
+    required: false
+    default: ''
+outputs:
+  is_valid:
+    description: '`true` if found valid version format in tag.'
+  is_stable:
+    description: '`true` if found stable version in tag.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  icon: 'check-square'
+  color: 'blue'
