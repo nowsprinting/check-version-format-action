@@ -10,7 +10,6 @@ Check version format in tag.
 ### `prefix`
 
 Version prefix in tag. `refs/tags/` is unnecessary.
-
 e.g. `v`
 
 
@@ -18,15 +17,13 @@ e.g. `v`
 
 ### `is_valid`
 
-`true` if found valid version format in tag.
-
-e.g. `v1`, `v1.2`, `v2-alpha1`, `v2.3-beta2`, `v2.3.4-rc3` is valid version format.
+Set `true` if found valid version format in tag.
+e.g. `v1`, `v1.2`, `v2-alpha1`, `v2.3-beta2`, `v2.3.4-rc3`
 
 ### `is_stable`
 
-`true` if found stable version in tag.
-
-e.g. `v1`, `v1.2`, `v2.3.4` is stable version.
+Set `true` if found stable version in tag.
+e.g. `v1`, `v1.2`, `v2.3.4`
 
 
 ## Example usage
