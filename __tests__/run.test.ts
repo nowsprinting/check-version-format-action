@@ -14,15 +14,11 @@ describe.each`
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
-    const setOutputSpy = jest.spyOn(core, 'setOutput')
+    const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(setOutputSpy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
-    expect(setOutputSpy).toHaveBeenNthCalledWith(
-      2,
-      'is_stable',
-      true.toString()
-    )
+    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
+    expect(spy).toHaveBeenNthCalledWith(4, 'is_stable', true.toString())
   })
 })
 
@@ -37,15 +33,11 @@ describe.each`
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
-    const setOutputSpy = jest.spyOn(core, 'setOutput')
+    const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(setOutputSpy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
-    expect(setOutputSpy).toHaveBeenNthCalledWith(
-      2,
-      'is_stable',
-      false.toString()
-    )
+    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
+    expect(spy).toHaveBeenNthCalledWith(4, 'is_stable', false.toString())
   })
 })
 
@@ -60,18 +52,30 @@ describe.each`
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
-    const setOutputSpy = jest.spyOn(core, 'setOutput')
+    const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(setOutputSpy).toHaveBeenNthCalledWith(
-      1,
-      'is_valid',
-      false.toString()
-    )
-    expect(setOutputSpy).toHaveBeenNthCalledWith(
-      2,
-      'is_stable',
-      false.toString()
-    )
+    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', false.toString())
+    expect(spy).toHaveBeenNthCalledWith(2, 'is_stable', false.toString())
   })
+})
+
+describe.each`
+  prefix | ref                              | full                    | major
+  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                 | ${'v1'}
+  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}               | ${'v1'}
+  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}             | ${'v2'}
+  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}          | ${'v3'}
+  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'}  | ${'99'}
+`('version string', ({prefix, ref, full, major}) => {
+    test(`${ref}`, async () => {
+        process.env['INPUT_PREFIX'] = prefix
+        github.context.ref = ref
+
+        const spy = jest.spyOn(core, 'setOutput')
+        await run()
+
+        expect(spy).toHaveBeenNthCalledWith(2, 'full', full)
+        expect(spy).toHaveBeenNthCalledWith(3, 'major', major)
+    })
 })
