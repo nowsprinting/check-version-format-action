@@ -61,21 +61,21 @@ describe.each`
 })
 
 describe.each`
-  prefix | ref                              | full                    | major
-  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                 | ${'v1'}
-  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}               | ${'v1'}
-  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}             | ${'v2'}
-  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}          | ${'v3'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'}  | ${'99'}
+  prefix | ref                              | full                   | major
+  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                | ${'v1'}
+  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}              | ${'v1'}
+  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}            | ${'v2'}
+  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}         | ${'v3'}
+  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'} | ${'99'}
 `('version string', ({prefix, ref, full, major}) => {
-    test(`${ref}`, async () => {
-        process.env['INPUT_PREFIX'] = prefix
-        github.context.ref = ref
+  test(`${ref}`, async () => {
+    process.env['INPUT_PREFIX'] = prefix
+    github.context.ref = ref
 
-        const spy = jest.spyOn(core, 'setOutput')
-        await run()
+    const spy = jest.spyOn(core, 'setOutput')
+    await run()
 
-        expect(spy).toHaveBeenNthCalledWith(2, 'full', full)
-        expect(spy).toHaveBeenNthCalledWith(3, 'major', major)
-    })
+    expect(spy).toHaveBeenNthCalledWith(2, 'full', full)
+    expect(spy).toHaveBeenNthCalledWith(3, 'major', major)
+  })
 })
