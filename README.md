@@ -4,6 +4,16 @@
 
 Check and extract version string from tag.
 
+You can know:
+
+- Is the tagged version format correct
+- Is the tagged version stable
+
+You can get:
+
+- Full version string
+- Major version string
+
 
 ## Inputs
 
@@ -48,7 +58,7 @@ e.g. `v1`, `v2`
   run: |
     echo "Found valid version format in tag!"
     echo "Full version: ${{ steps.version.outputs.full }}"
-    echo "Major version: ${{ steps.version.outputs.major }}""
+    echo "Major version: ${{ steps.version.outputs.major }}"
   if: steps.version.outputs.is_valid == 'true'
 
 - name: Stable version only step
