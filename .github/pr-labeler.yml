@@ -1,5 +1,4 @@
 enhancement: [ 'feature/*', 'feat/*' ]
 bug: [ 'fix/*', 'hotfix/*' ]
 chore: 'chore/*'
-dependencies: 'dependabot/*'
 skip-changelog: 'release/*'
