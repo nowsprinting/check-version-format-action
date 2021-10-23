@@ -38,7 +38,7 @@ e.g. `v1`, `v1.2`, `v2.3.4`
 ### `full`
 
 Set full version as a string (include prefix).
-e.g. `v1`, `v1.2`, `v2.3.4`
+e.g. `v1`, `v1.2`, `v2-alpha1`, `v2.3-beta2`, `v2.3.4-rc3`
 
 ### `major`
 
