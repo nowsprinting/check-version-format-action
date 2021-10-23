@@ -1,32 +1,37 @@
-name: "build-test"
-on: # rebuild any PRs and main branch changes
-  pull_request:
+name: Test
+
+on:
   push:
     branches:
       - master
-      - 'releases/*'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    types: [ opened, synchronize, reopened ]  # Same as default
+    paths-ignore:
+      - '**.md'
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: |
-        npm install
-    - run: |
-        npm run all
+      - uses: actions/checkout@v2
+      - run: |
+          npm install
+      - run: |
+          npm run all
 
-  test: # make sure the action works on a clean machine without building
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      id: version
-      with: 
-        prefix: v
-    - name: valid version only step
-      run: echo Found valid version format in tag!
-      if: steps.version.outputs.is_valid == 'true'
-    - name: Stable version only step
-      run: echo Found stable version in tag!
-      if: steps.version.outputs.is_stable == 'true'
+      - uses: actions/checkout@v2
+      - uses: .
+        id: version
+        with:
+          prefix: v
+      - name: valid version only step
+        run: echo Found valid version format in tag!
+        if: steps.version.outputs.is_valid == 'true'
+      - name: Stable version only step
+        run: echo Found stable version in tag!
+        if: steps.version.outputs.is_stable == 'true'

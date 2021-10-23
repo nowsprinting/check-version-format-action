@@ -1,6 +1,6 @@
 # check-version-format-action
 
-[![build-test](https://github.com/nowsprinting/check-version-format-action/workflows/build-test/badge.svg)](../../actions)
+[![Test](https://github.com/nowsprinting/check-version-format-action/actions/workflows/test.yml/badge.svg)](https://github.com/nowsprinting/check-version-format-action/actions/workflows/test.yml)
 
 Check version format in tag.
 
