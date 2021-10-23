@@ -1,5 +1,5 @@
 name: 'Check Version Format in Tag'
-description: 'Check version format in tag'
+description: 'Check and extract version format from tag.'
 author: 'nowsprinting'
 inputs:
   prefix:
@@ -11,6 +11,10 @@ outputs:
     description: '`true` if found valid version format in tag.'
   is_stable:
     description: '`true` if found stable version in tag.'
+  full:
+    description: 'Set full version as a string (include prefix).'
+  major:
+    description: 'Set major version as a string (include prefix).'
 runs:
   using: 'node12'
   main: 'dist/index.js'

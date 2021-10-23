@@ -6,10 +6,13 @@ export async function run(): Promise<void> {
     const prefix: string = core.getInput('prefix')
     core.debug(`prefix: ${prefix}`)
 
-    const versionRegexpBase = `^refs/tags/${prefix}([0-9]+(\\.[0-9]+)*`
+    const versionRegexpBase = `^refs/tags/${prefix}(([0-9]+)(\\.[0-9]+)*`
     const versionRegexp = RegExp(`${versionRegexpBase}.*$)`)
-    if (github.context.ref.match(versionRegexp) != null) {
+    const matcher = github.context.ref.match(versionRegexp)
+    if (matcher != null) {
       core.setOutput('is_valid', true.toString())
+      core.setOutput('full', prefix + matcher[1])
+      core.setOutput('major', prefix + matcher[2])
     } else {
       core.setOutput('is_valid', false.toString())
     }
