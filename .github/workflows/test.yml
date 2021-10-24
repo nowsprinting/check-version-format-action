@@ -1,9 +1,10 @@
-name: Test
+name: 'build-test'
 
 on:
   push:
     branches:
       - master
+      - 'releases/*'
     paths-ignore:
       - '**.md'
   pull_request:
@@ -17,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          npm install
+          npm ci
       - run: |
           npm run all
 
@@ -25,13 +26,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: ./
         id: version
         with:
           prefix: v
+
       - name: valid version only step
-        run: echo Found valid version format in tag!
+        run: |
+          echo "Found valid version format in tag!"
+          echo "Full version: ${{ steps.version.outputs.full }}"
+          echo "Major version: ${{ steps.version.outputs.major }}"
         if: steps.version.outputs.is_valid == 'true'
+
       - name: Stable version only step
-        run: echo Found stable version in tag!
+        run: |
+          echo "Found stable version in tag!"
         if: steps.version.outputs.is_stable == 'true'
