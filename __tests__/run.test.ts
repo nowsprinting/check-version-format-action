@@ -17,8 +17,8 @@ describe.each`
     const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
-    expect(spy).toHaveBeenNthCalledWith(4, 'is_stable', true.toString())
+    expect(spy).toHaveBeenCalledWith('is_valid', true.toString())
+    expect(spy).toHaveBeenCalledWith('is_stable', true.toString())
   })
 })
 
@@ -36,8 +36,8 @@ describe.each`
     const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', true.toString())
-    expect(spy).toHaveBeenNthCalledWith(4, 'is_stable', false.toString())
+    expect(spy).toHaveBeenCalledWith('is_valid', true.toString())
+    expect(spy).toHaveBeenCalledWith('is_stable', false.toString())
   })
 })
 
@@ -55,8 +55,8 @@ describe.each`
     const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(spy).toHaveBeenNthCalledWith(1, 'is_valid', false.toString())
-    expect(spy).toHaveBeenNthCalledWith(2, 'is_stable', false.toString())
+    expect(spy).toHaveBeenCalledWith('is_valid', false.toString())
+    expect(spy).toHaveBeenCalledWith('is_stable', false.toString())
   })
 })
 
@@ -75,7 +75,7 @@ describe.each`
     const spy = jest.spyOn(core, 'setOutput')
     await run()
 
-    expect(spy).toHaveBeenNthCalledWith(2, 'full', full)
-    expect(spy).toHaveBeenNthCalledWith(3, 'major', major)
+    expect(spy).toHaveBeenCalledWith('full', full)
+    expect(spy).toHaveBeenCalledWith('major', major)
   })
 })
