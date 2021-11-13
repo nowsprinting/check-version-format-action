@@ -97,5 +97,4 @@ Open an issue or create a pull request.
 
 ## Release flow
 
-1. Bump version in package.json
-2. Push (or merge) to default branch
+Bump version in package.json and push (or merge) to default branch.
