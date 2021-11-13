@@ -2,7 +2,7 @@
   "name": "check-version-format-action",
   "version": "1.1.1",
   "private": true,
-  "description": "Check version format in tag",
+  "description": "Check and extract version format from tag.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
