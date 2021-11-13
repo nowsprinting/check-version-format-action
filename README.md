@@ -83,3 +83,19 @@ jobs:
           echo "Found stable version in tag!"
         if: steps.version.outputs.is_stable == 'true'
 ```
+
+
+## License
+
+MIT License
+
+
+## How to contribute
+
+Open an issue or create a pull request.
+
+
+## Release flow
+
+1. Bump version in package.json
+2. Push (or merge) to default branch
