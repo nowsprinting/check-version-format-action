@@ -98,3 +98,5 @@ Open an issue or create a pull request.
 ## Release flow
 
 Bump version in package.json && npm install && npm run all && push (or merge) to default branch.
+
+Or run [Create release pull request](https://github.com/nowsprinting/check-version-format-action/actions/workflows/create_release_pr.yml) workflow and merge PR.
