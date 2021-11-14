@@ -95,7 +95,7 @@ MIT License
 Open an issue or create a pull request.
 
 
-## Release flow
+## Release workflow
 
 Bump version in package.json && npm install && npm run all && push (or merge) to default branch.
 
