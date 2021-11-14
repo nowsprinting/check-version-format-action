@@ -17,7 +17,7 @@ jobs:
         with:
           ref: master
       - run: |
-          git branch release/${{ github.event.inputs.version }}
+          git checkout -b release/${{ github.event.inputs.version }}
           npm version --no-git-tag-version ${{ github.event.inputs.version }}
           npm install
           npm run all
@@ -27,3 +27,5 @@ jobs:
           git commit -m"Bump version"
           git push origin HEAD
           gh pr create --fill
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
