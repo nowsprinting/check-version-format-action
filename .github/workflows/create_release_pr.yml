@@ -1,5 +1,4 @@
 name: Create release pull request
-# For GitHub Actions, with run npm install to rewrite the version in package-lock.json file
 
 on:
   workflow_dispatch:
@@ -19,8 +18,6 @@ jobs:
       - run: |
           git checkout -b release/${{ github.event.inputs.version }}
           npm version --no-git-tag-version ${{ github.event.inputs.version }}
-          npm install
-          npm run all
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
