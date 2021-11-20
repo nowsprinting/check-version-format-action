@@ -38,7 +38,7 @@ jobs:
           major=$(echo v"$PACKAGE_VERSION" | sed -r 's/(v[0-9]+).*/\1/')
           git tag "$major"
           git tag latest
-          git push -f --tags
+          git push --tags --force
 
       - uses: 8398a7/action-slack@v3
         with:
