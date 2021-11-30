@@ -1,5 +1,4 @@
 name: Release when bump version in package.json
-# For GitHub Actions, Update major version and latest tag
 
 on:
   push:
@@ -21,10 +20,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test a tag does not exist
-        run: |
-          test ${{ steps.checkTag.outputs.exists }} = false
-
       - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter.yml
@@ -32,13 +27,15 @@ jobs:
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.checkTag.outputs.exists == 'false'
 
-      - name: Update major version and latest tag
+      - name: Update major version and latest tag # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
           major=$(echo v"$PACKAGE_VERSION" | sed -r 's/(v[0-9]+).*/\1/')
           git tag "$major"
           git tag latest
           git push --tags --force
+        if: steps.checkTag.outputs.exists == 'false'
 
       - uses: 8398a7/action-slack@v3
         with:
@@ -49,4 +46,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: always()
+        if: steps.checkTag.outputs.exists == 'false'
