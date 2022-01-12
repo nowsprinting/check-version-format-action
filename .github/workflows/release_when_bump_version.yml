@@ -29,12 +29,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: steps.checkTag.outputs.exists == 'false'
 
-      - name: Update major version and latest tag # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
+      - name: Update major version and latest branch # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
           major=$(echo v"$PACKAGE_VERSION" | sed -r 's/(v[0-9]+).*/\1/')
-          git tag "$major"
-          git tag latest
-          git push --tags --force
+          git push --force origin "HEAD:$major"
+          git push --force origin "HEAD:latest"
         if: steps.checkTag.outputs.exists == 'false'
 
       - uses: 8398a7/action-slack@v3
