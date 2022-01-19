@@ -11,6 +11,7 @@ on:
 jobs:
   create_release_pr:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
         with:

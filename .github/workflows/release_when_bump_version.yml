@@ -10,6 +10,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - uses: nyaa8/package-version@v1
@@ -28,6 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: steps.checkTag.outputs.exists == 'false'
+        # Create a publish-release refreshes the GitHub Marketplace page
 
       - name: Update major version and latest branch # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
