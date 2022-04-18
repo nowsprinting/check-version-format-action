@@ -1,11 +1,13 @@
 name: 'Check Version Format in Tag'
 description: 'Check and extract version format from tag.'
 author: 'nowsprinting'
+
 inputs:
   prefix:
     description: 'Version prefix in tag. `refs/tags/` is unnecessary.'
     required: false
     default: ''
+
 outputs:
   is_valid:
     description: '`true` if found valid version format in tag.'
@@ -15,9 +17,11 @@ outputs:
     description: 'Set full version as a string (include prefix).'
   major:
     description: 'Set major version as a string (include prefix).'
+
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
+
 branding:
   icon: 'check-square'
   color: 'blue'
