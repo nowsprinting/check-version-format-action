@@ -34,8 +34,8 @@ jobs:
       - name: Update major version and latest branch # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
           major=$(echo v"$PACKAGE_VERSION" | sed -r 's/(v[0-9]+).*/\1/')
-          git push --force origin "HEAD:$major"
-          git push --force origin "HEAD:latest"
+          git push --force origin "HEAD:refs/heads/$major"
+          git push --force origin "HEAD:refs/heads/latest"
         if: steps.checkTag.outputs.exists == 'false'
 
       - uses: 8398a7/action-slack@v3
