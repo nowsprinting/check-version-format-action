@@ -63,7 +63,7 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  test-tag:
     runs-on: ubuntu-latest
     steps:
       - uses: nowsprinting/check-version-format-action@v1
@@ -94,13 +94,35 @@ MIT License
 
 Open an issue or create a pull request.
 
+### Start coding
+
+```shell
+npm install
+```
+
+### Run test
+
+```shell
+npm run test
+```
+
+### Package
+
+```shell
+npm run package
+git add dist/
+git commit
+```
+
+### Create PR
+
 Be grateful if you could label the PR as `enhancement`, `bug`, `chore` and `documentation`. See [PR Labeler settings](.github/pr-labeler.yml) for automatically labeling from the branch name.
 
 
 ## Release workflow
 
 Bump version in package.json on default branch.
-Or run [Create release pull request](https://github.com/nowsprinting/check-version-format-action/actions/workflows/create_release_pr.yml) workflow and merge PR.
+Or run [Create release pull request](https://github.com/nowsprinting/check-version-format-action/actions/workflows/create-release-pr.yml) workflow and merge PR.
 
 Then, Will do the release process automatically by [Release when bump version](.github/workflows/release-when-bump-version.yml) workflow.
 The GitHub Marketplace page will be updated based on the Release.
