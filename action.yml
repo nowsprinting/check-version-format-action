@@ -17,6 +17,8 @@ outputs:
     description: 'Set full version as a string (include prefix).'
   major:
     description: 'Set major version as a string (include prefix).'
+  major_prerelease:
+    description: 'Set major version with pre-release as a string (include prefix).'
 
 runs:
   using: 'node16'

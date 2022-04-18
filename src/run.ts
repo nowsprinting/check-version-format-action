@@ -7,12 +7,20 @@ export async function run(): Promise<void> {
     core.debug(`prefix: ${prefix}`)
 
     const versionRegexpBase = `^refs/tags/${prefix}(([0-9]+)(\\.[0-9]+)*`
-    const versionRegexp = RegExp(`${versionRegexpBase}.*$)`)
+    const versionRegexp = RegExp(`${versionRegexpBase}-?([0-9a-zA-Z-]*)$)`)
     const matcher = github.context.ref.match(versionRegexp)
     if (matcher != null) {
       core.setOutput('is_valid', true.toString())
-      core.setOutput('full', prefix + matcher[1])
-      core.setOutput('major', prefix + matcher[2])
+      core.setOutput('full', `${prefix}${matcher[1]}`)
+      core.setOutput('major', `${prefix}${matcher[2]}`)
+      if (matcher[4].length === 0) {
+        core.setOutput('major_prerelease', `${prefix}${matcher[2]}`)
+      } else {
+        core.setOutput(
+          'major_prerelease',
+          `${prefix}${matcher[2]}-${matcher[4]}`
+        )
+      }
     } else {
       core.setOutput('is_valid', false.toString())
     }

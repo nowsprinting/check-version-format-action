@@ -54,6 +54,13 @@ Set major version as a string (include prefix).
 e.g. `v1`, `v2`
 
 
+### `major_prerelease`
+
+Set major version with pre-release as a string (include prefix).
+
+e.g. `v1-alpha`, `v2-beta`
+
+
 ## Example usage
 
 ```yaml
@@ -76,6 +83,7 @@ jobs:
           echo "Found valid version format in tag!"
           echo "Full version: ${{ steps.version.outputs.full }}"
           echo "Major version: ${{ steps.version.outputs.major }}"
+          echo "Major version with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
 
       - name: Stable version only step
