@@ -61,13 +61,14 @@ describe.each`
 })
 
 describe.each`
-  prefix | ref                              | full                   | major
-  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                | ${'v1'}
-  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}              | ${'v1'}
-  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}            | ${'v2'}
-  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}         | ${'v3'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'} | ${'99'}
-`('version string', ({prefix, ref, full, major}) => {
+  prefix | ref                              | full                   | major   | major_prerelease
+  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                | ${'v1'} | ${'v1'}
+  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}              | ${'v1'} | ${'v1'}
+  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}            | ${'v2'} | ${'v2'}
+  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}         | ${'v3'} | ${'v3-alpha1'}
+  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'} | ${'99'} | ${'99'}
+  ${``}  | ${'refs/tags/99.999.9-beta2'}    | ${'99.999.9-beta2'}    | ${'99'} | ${'99-beta2'}
+`('version string', ({prefix, ref, full, major, major_prerelease}) => {
   test(`${ref}`, async () => {
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
@@ -77,5 +78,6 @@ describe.each`
 
     expect(spy).toHaveBeenCalledWith('full', full)
     expect(spy).toHaveBeenCalledWith('major', major)
+    expect(spy).toHaveBeenCalledWith('major_prerelease', major_prerelease)
   })
 })
