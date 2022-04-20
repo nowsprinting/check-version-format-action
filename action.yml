@@ -4,9 +4,13 @@ author: 'nowsprinting'
 
 inputs:
   prefix:
-    description: 'Version prefix in tag. `refs/tags/` is unnecessary.'
+    description: 'Version prefix in tag. `refs/tags/` are unnecessary.'
     required: false
     default: ''
+  strict:
+    description: 'Strictly verify version format using semver'
+    required: false
+    default: 'true'
 
 outputs:
   is_valid:

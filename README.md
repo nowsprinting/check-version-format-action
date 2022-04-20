@@ -24,6 +24,11 @@ Version prefix in tag.
 e.g. `v`
 
 
+### `strict`
+
+Strictly verify version format using [semver](https://www.npmjs.com/package/semver). Default is `true`
+
+
 ## Outputs
 
 ### `is_valid`

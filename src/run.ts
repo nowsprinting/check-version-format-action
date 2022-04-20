@@ -15,8 +15,12 @@ export async function run(): Promise<void> {
       return
     }
 
-    const versionNumber: string = versionNumberMatcher[1] // TODO: non-strict mode (use semver.coerce)
-    if (semver.valid(versionNumber) == null) {
+    const versionNumber = versionNumberMatcher[1]
+    if (
+      (core.getInput('strict').toLowerCase() === 'true' &&
+        semver.valid(versionNumber) == null) ||
+      semver.valid(semver.coerce(versionNumber)) == null
+    ) {
       core.setOutput('is_valid', false.toString())
       core.setOutput('is_stable', false.toString())
       return
