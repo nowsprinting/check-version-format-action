@@ -54,11 +54,11 @@ function run() {
                 core.setOutput('is_valid', true.toString());
                 core.setOutput('full', `${prefix}${matcher[1]}`);
                 core.setOutput('major', `${prefix}${matcher[2]}`);
-                if (matcher.length <= 3) {
+                if (matcher[4].length === 0) {
                     core.setOutput('major_prerelease', `${prefix}${matcher[2]}`);
                 }
                 else {
-                    core.setOutput('major_prerelease', `${prefix}${matcher[2]}-${matcher[3]}`);
+                    core.setOutput('major_prerelease', `${prefix}${matcher[2]}-${matcher[4]}`);
                 }
             }
             else {
