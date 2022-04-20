@@ -73,7 +73,7 @@ jobs:
   test-tag:
     runs-on: ubuntu-latest
     steps:
-      - uses: nowsprinting/check-version-format-action@v1
+      - uses: nowsprinting/check-version-format-action@v2
         id: version
         with:
           prefix: 'v'
