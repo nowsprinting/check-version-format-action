@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 import {run} from '../src/run'
 import * as process from 'process'
 import * as core from '@actions/core'
@@ -11,27 +9,8 @@ describe.each`
   ${`v`} | ${'refs/tags/v1.2'}
   ${`v`} | ${'refs/tags/v2.3.4'}
   ${``}  | ${'refs/tags/99.999.9999.99999'}
-`('stable version (non-strict mode)', ({prefix, ref}) => {
+`('stable version', ({prefix, ref}) => {
   test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'false'
-    process.env['INPUT_PREFIX'] = prefix
-    github.context.ref = ref
-
-    const spy = jest.spyOn(core, 'setOutput')
-    await run()
-
-    expect(spy).toHaveBeenCalledWith('is_valid', true.toString())
-    expect(spy).toHaveBeenCalledWith('is_stable', true.toString())
-  })
-})
-
-describe.each`
-  prefix | ref
-  ${`v`} | ${'refs/tags/v2.3.4'}
-  ${``}  | ${'refs/tags/1.0.0'}
-`('stable version (strict mode)', ({prefix, ref}) => {
-  test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'true'
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
@@ -49,27 +28,8 @@ describe.each`
   ${`v`} | ${'refs/tags/v2.3-beta2'}
   ${`v`} | ${'refs/tags/v2.3.4-rc3'}
   ${``}  | ${'refs/tags/99.999.9999.99999-SNAPSHOT'}
-`('valid version format but not stable (non-strict mode)', ({prefix, ref}) => {
+`('valid version format but not stable', ({prefix, ref}) => {
   test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'false'
-    process.env['INPUT_PREFIX'] = prefix
-    github.context.ref = ref
-
-    const spy = jest.spyOn(core, 'setOutput')
-    await run()
-
-    expect(spy).toHaveBeenCalledWith('is_valid', true.toString())
-    expect(spy).toHaveBeenCalledWith('is_stable', false.toString())
-  })
-})
-
-describe.each`
-  prefix | ref
-  ${`v`} | ${'refs/tags/v2.3.4-rc3'}
-  ${``}  | ${'refs/tags/1.0.0-alpha'}
-`('valid version format but not stable (strict mode)', ({prefix, ref}) => {
-  test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'true'
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
@@ -87,29 +47,8 @@ describe.each`
   ${``}  | ${'refs/tags/v2.3.4.5'}
   ${``}  | ${'refs/heads/master'}
   ${``}  | ${'refs/pull/:prNumber/merge'}
-`('invalid version format (non-strict mode)', ({prefix, ref}) => {
+`('invalid version format', ({prefix, ref}) => {
   test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'false'
-    process.env['INPUT_PREFIX'] = prefix
-    github.context.ref = ref
-
-    const spy = jest.spyOn(core, 'setOutput')
-    await run()
-
-    expect(spy).toHaveBeenCalledWith('is_valid', false.toString())
-    expect(spy).toHaveBeenCalledWith('is_stable', false.toString())
-  })
-})
-
-describe.each`
-  prefix | ref
-  ${`v`} | ${'refs/tags/v1'}
-  ${`v`} | ${'refs/tags/v1.2'}
-  ${`v`} | ${'refs/tags/v1.2-beta3'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'}
-`('invalid version format (strict mode)', ({prefix, ref}) => {
-  test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'true'
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
@@ -123,15 +62,14 @@ describe.each`
 
 describe.each`
   prefix | ref                              | full                   | major   | major_prerelease
-  ${`v`} | ${'refs/tags/v1'}                | ${'v1.0.0'}            | ${'v1'} | ${'v1'}
-  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2.0'}            | ${'v1'} | ${'v1'}
+  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                | ${'v1'} | ${'v1'}
+  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}              | ${'v1'} | ${'v1'}
   ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}            | ${'v2'} | ${'v2'}
-  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3.0.0-alpha1'}     | ${'v3'} | ${'v3-alpha1'}
+  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}         | ${'v3'} | ${'v3-alpha1'}
   ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'} | ${'99'} | ${'99'}
   ${``}  | ${'refs/tags/99.999.9-beta2'}    | ${'99.999.9-beta2'}    | ${'99'} | ${'99-beta2'}
 `('version string', ({prefix, ref, full, major, major_prerelease}) => {
   test(`${ref}`, async () => {
-    process.env['INPUT_STRICT'] = 'false'
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
 
