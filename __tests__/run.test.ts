@@ -5,10 +5,10 @@ import * as github from '@actions/github'
 
 describe.each`
   prefix | ref
-  ${`v`} | ${'refs/tags/v1'}
-  ${`v`} | ${'refs/tags/v1.2'}
+  ${`v`} | ${'refs/tags/v1.0.0'}
   ${`v`} | ${'refs/tags/v2.3.4'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'}
+  ${``}  | ${'refs/tags/99.999.9999'}
+  ${``}  | ${'refs/tags/99.999.9999+0354f3a'}
 `('stable version', ({prefix, ref}) => {
   test(`${ref}`, async () => {
     process.env['INPUT_PREFIX'] = prefix
@@ -24,10 +24,10 @@ describe.each`
 
 describe.each`
   prefix | ref
-  ${`v`} | ${'refs/tags/v2-alpha1'}
-  ${`v`} | ${'refs/tags/v2.3-beta2'}
-  ${`v`} | ${'refs/tags/v2.3.4-rc3'}
-  ${``}  | ${'refs/tags/99.999.9999.99999-SNAPSHOT'}
+  ${`v`} | ${'refs/tags/v1.0.0-alpha'}
+  ${`v`} | ${'refs/tags/v2.3.4-beta5'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT+0354f3a'}
 `('valid version format but not stable', ({prefix, ref}) => {
   test(`${ref}`, async () => {
     process.env['INPUT_PREFIX'] = prefix
@@ -43,6 +43,9 @@ describe.each`
 
 describe.each`
   prefix | ref
+  ${`v`} | ${'refs/tags/v1'}
+  ${`v`} | ${'refs/tags/v1.2'}
+  ${``}  | ${'refs/tags/99.999.9999.99999'}
   ${`v`} | ${'refs/tags/2.3.4-rc3'}
   ${``}  | ${'refs/tags/v2.3.4.5'}
   ${``}  | ${'refs/heads/master'}
@@ -61,13 +64,15 @@ describe.each`
 })
 
 describe.each`
-  prefix | ref                              | full                   | major   | major_prerelease
-  ${`v`} | ${'refs/tags/v1'}                | ${'v1'}                | ${'v1'} | ${'v1'}
-  ${`v`} | ${'refs/tags/v1.2'}              | ${'v1.2'}              | ${'v1'} | ${'v1'}
-  ${`v`} | ${'refs/tags/v2.3.4'}            | ${'v2.3.4'}            | ${'v2'} | ${'v2'}
-  ${`v`} | ${'refs/tags/v3-alpha1'}         | ${'v3-alpha1'}         | ${'v3'} | ${'v3-alpha1'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'} | ${'99.999.9999.99999'} | ${'99'} | ${'99'}
-  ${``}  | ${'refs/tags/99.999.9-beta2'}    | ${'99.999.9-beta2'}    | ${'99'} | ${'99-beta2'}
+  prefix | ref                                         | full                              | major   | major_prerelease
+  ${`v`} | ${'refs/tags/v1.0.0'}                       | ${'v1.0.0'}                       | ${'v1'} | ${'v1'}
+  ${`v`} | ${'refs/tags/v2.3.4'}                       | ${'v2.3.4'}                       | ${'v2'} | ${'v2'}
+  ${`v`} | ${'refs/tags/v1.0.0-alpha'}                 | ${'v1.0.0-alpha'}                 | ${'v1'} | ${'v1-alpha'}
+  ${`v`} | ${'refs/tags/v2.3.4-beta5'}                 | ${'v2.3.4-beta5'}                 | ${'v2'} | ${'v2-beta5'}
+  ${``}  | ${'refs/tags/99.999.9999'}                  | ${'99.999.9999'}                  | ${'99'} | ${'99'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT'}         | ${'99.999.9999-SNAPSHOT'}         | ${'99'} | ${'99-SNAPSHOT'}
+  ${``}  | ${'refs/tags/99.999.9999+0354f3a'}          | ${'99.999.9999+0354f3a'}          | ${'99'} | ${'99'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT+0354f3a'} | ${'99.999.9999-SNAPSHOT+0354f3a'} | ${'99'} | ${'99-SNAPSHOT'}
 `('version string', ({prefix, ref, full, major, major_prerelease}) => {
   test(`${ref}`, async () => {
     process.env['INPUT_PREFIX'] = prefix

@@ -11,8 +11,13 @@ You can know:
 
 You can get:
 
-- Full version string
-- Major version string
+- Full version string (e.g. `v2.3.4-beta5`)
+- Major version string (e.g. `v2`)
+- Major version + pre-release string (e.g. `v2-beta5`)
+
+**CAUTION:**
+v3 or later, verification version so strictly (using [semver](https://semver.org/)).
+If you want to use non-strict version number (e.g. `v1.2`), use v2 or earlier.
 
 
 ## Inputs
@@ -28,23 +33,23 @@ e.g. `v`
 
 ### `is_valid`
 
-Set `true` if found valid version format in tag.
+Set `true` if found valid [semver](https://semver.org/) format in tag.
 
-e.g. `v1`, `v1.2`, `v2-alpha1`, `v2.3-beta2`, `v2.3.4-rc3`
+e.g. `v1.0.0`, `v2.3.4-beta5`
 
 
 ### `is_stable`
 
-Set `true` if found stable version in tag.
+Set `true` if found stable version in tag. (not have pre-release metadata)
 
-e.g. `v1`, `v1.2`, `v2.3.4`
+e.g. `v1.0.0`, `v2.3.4`
 
 
 ### `full`
 
 Set full version as a string (include prefix).
 
-e.g. `v1`, `v1.2`, `v2-alpha1`, `v2.3-beta2`, `v2.3.4-rc3`
+e.g. `v1.0.0`, `v2.3.4-beta5`
 
 
 ### `major`
@@ -58,7 +63,7 @@ e.g. `v1`, `v2`
 
 Set major version with pre-release as a string (include prefix).
 
-e.g. `v1-alpha`, `v2-beta`
+e.g. `v1`, `v2-beta5`
 
 
 ## Example usage

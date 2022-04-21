@@ -1,35 +1,40 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import * as semver from 'semver'
 
 export async function run(): Promise<void> {
   try {
     const prefix: string = core.getInput('prefix')
     core.debug(`prefix: ${prefix}`)
 
-    const versionRegexpBase = `^refs/tags/${prefix}(([0-9]+)(\\.[0-9]+)*`
-    const versionRegexp = RegExp(`${versionRegexpBase}-?([0-9a-zA-Z-]*)$)`)
-    const matcher = github.context.ref.match(versionRegexp)
-    if (matcher != null) {
-      core.setOutput('is_valid', true.toString())
-      core.setOutput('full', `${prefix}${matcher[1]}`)
-      core.setOutput('major', `${prefix}${matcher[2]}`)
-      if (matcher[4].length === 0) {
-        core.setOutput('major_prerelease', `${prefix}${matcher[2]}`)
-      } else {
-        core.setOutput(
-          'major_prerelease',
-          `${prefix}${matcher[2]}-${matcher[4]}`
-        )
-      }
-    } else {
+    const versionNumberRegexp = `^refs/tags/${prefix}(.+)$`
+    const versionNumberMatcher = github.context.ref.match(versionNumberRegexp)
+    if (versionNumberMatcher == null) {
       core.setOutput('is_valid', false.toString())
+      core.setOutput('is_stable', false.toString())
+      return
     }
 
-    const stableRegexp = RegExp(`${versionRegexpBase}$)`)
-    if (github.context.ref.match(stableRegexp) != null) {
+    const versionNumber: string = versionNumberMatcher[1] // TODO: non-strict mode (use semver.coerce)
+    if (semver.valid(versionNumber) == null) {
+      core.setOutput('is_valid', false.toString())
+      core.setOutput('is_stable', false.toString())
+      return
+    }
+
+    core.setOutput('is_valid', true.toString())
+    core.setOutput('full', `${prefix}${versionNumber}`)
+
+    const major = semver.major(versionNumber)
+    core.setOutput('major', `${prefix}${major}`)
+
+    const prerelease = semver.prerelease(versionNumber)
+    if (prerelease == null) {
       core.setOutput('is_stable', true.toString())
+      core.setOutput('major_prerelease', `${prefix}${major}`)
     } else {
       core.setOutput('is_stable', false.toString())
+      core.setOutput('major_prerelease', `${prefix}${major}-${prerelease}`)
     }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
