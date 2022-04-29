@@ -30,7 +30,11 @@ export async function run(): Promise<void> {
 
     const prerelease = semver.prerelease(versionNumber)
     if (prerelease == null) {
-      core.setOutput('is_stable', true.toString())
+      if (major !== 0) {
+        core.setOutput('is_stable', true.toString())
+      } else {
+        core.setOutput('is_stable', false.toString())
+      }
       core.setOutput('major_prerelease', `${prefix}${major}`)
     } else {
       core.setOutput('is_stable', false.toString())
