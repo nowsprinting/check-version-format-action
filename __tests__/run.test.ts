@@ -26,6 +26,7 @@ describe.each`
   prefix | ref
   ${`v`} | ${'refs/tags/v1.0.0-alpha'}
   ${`v`} | ${'refs/tags/v2.3.4-beta5'}
+  ${`v`} | ${'refs/tags/v0.1.0'}
   ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT'}
   ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT+0354f3a'}
 `('valid version format but not stable', ({prefix, ref}) => {
@@ -45,9 +46,9 @@ describe.each`
   prefix | ref
   ${`v`} | ${'refs/tags/v1'}
   ${`v`} | ${'refs/tags/v1.2'}
-  ${``}  | ${'refs/tags/99.999.9999.99999'}
   ${`v`} | ${'refs/tags/2.3.4-rc3'}
   ${``}  | ${'refs/tags/v2.3.4.5'}
+  ${``}  | ${'refs/tags/99.999.9999.99999'}
   ${``}  | ${'refs/heads/master'}
   ${``}  | ${'refs/pull/:prNumber/merge'}
 `('invalid version format', ({prefix, ref}) => {
