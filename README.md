@@ -16,7 +16,7 @@ You can get:
 - Major version + pre-release string (e.g. `v2-beta5`)
 
 **CAUTION:**
-v3 or later, verification version so strictly (using [semver](https://semver.org/)).
+v3 or later, verify version number so strictly using [semver](https://semver.org/).
 If you want to use non-strict version number (e.g. `v1.2`), use v2 or earlier.
 
 
@@ -35,14 +35,15 @@ e.g. `v`
 
 Set `true` if found valid [semver](https://semver.org/) format in tag.
 
-e.g. `v1.0.0`, `v2.3.4-beta5`
+e.g. `v1.0.0`, `v2.3.4-beta5` is true.
 
 
 ### `is_stable`
 
-Set `true` if found stable version in tag. (not have pre-release metadata)
+Set `true` if found stable version in tag. (not have pre-release metadata and major > 0)
 
-e.g. `v1.0.0`, `v2.3.4`
+e.g. `v1.0.0`, `v2.3.4` is true.
+`v2.0.0-beta`, `v0.3.0` is false.
 
 
 ### `full`
@@ -77,6 +78,7 @@ on:
 jobs:
   test-tag:
     runs-on: ubuntu-latest
+
     steps:
       - uses: nowsprinting/check-version-format-action@v3
         id: version
@@ -88,7 +90,7 @@ jobs:
           echo "Found valid version format in tag!"
           echo "Full version: ${{ steps.version.outputs.full }}"
           echo "Major version: ${{ steps.version.outputs.major }}"
-          echo "Major version with pre-release: ${{ steps.version.outputs.major_prerelease }}"
+          echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
 
       - name: Stable version only step
@@ -107,27 +109,28 @@ MIT License
 
 Open an issue or create a pull request.
 
-### Start coding
+### Start developing
 
 ```shell
-npm install
+npm ci
 ```
 
-### Run test
+### Run tests
 
 ```shell
 npm run test
 ```
 
-### Package
+### Package (must run before checked-in)
 
 ```shell
+npm run build
 npm run package
 git add dist/
-git commit
+git commit -m"Packaged"
 ```
 
-### Create PR
+### Create pull request
 
 Be grateful if you could label the PR as `enhancement`, `bug`, `chore` and `documentation`. See [PR Labeler settings](.github/pr-labeler.yml) for automatically labeling from the branch name.
 
