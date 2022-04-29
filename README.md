@@ -22,7 +22,7 @@ If you want to use non-strict version number (e.g. `v1.2`), use v2 or earlier.
 
 ## Inputs
 
-### `prefix`
+### prefix
 
 Version prefix in tag.
 
@@ -31,14 +31,14 @@ e.g. `v`
 
 ## Outputs
 
-### `is_valid`
+### is_valid
 
 Set `true` if found valid [semver](https://semver.org/) format in tag.
 
 e.g. `v1.0.0`, `v2.3.4-beta5` is true.
 
 
-### `is_stable`
+### is_stable
 
 Set `true` if found stable version in tag. (not have pre-release metadata and major > 0)
 
@@ -46,21 +46,21 @@ e.g. `v1.0.0`, `v2.3.4` is true.
 `v2.0.0-beta`, `v0.3.0` is false.
 
 
-### `full`
+### full
 
 Set full version as a string (include prefix).
 
 e.g. `v1.0.0`, `v2.3.4-beta5`
 
 
-### `major`
+### major
 
 Set major version as a string (include prefix).
 
 e.g. `v1`, `v2`
 
 
-### `major_prerelease`
+### major_prerelease
 
 Set major version with pre-release as a string (include prefix).
 
