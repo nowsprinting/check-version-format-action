@@ -42,7 +42,7 @@ e.g. `v1.0.0`, `v2.3.4-beta5` is true.
 
 Set `true` if found stable version in tag. (not have pre-release metadata and major > 0)
 
-e.g. `v1.0.0`, `v2.3.4` is true.
+e.g. `v1.0.0`, `v2.3.4`, `5.6.7+build8` is true.
 `v2.0.0-beta`, `v0.3.0` is false.
 
 

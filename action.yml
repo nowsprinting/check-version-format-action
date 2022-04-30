@@ -12,7 +12,7 @@ outputs:
   is_valid:
     description: '`true` if found valid version format in tag.'
   is_stable:
-    description: '`true` if found stable version in tag.'
+    description: '`true` if found stable version in tag. (not have pre-release metadata and major > 0)'
   full:
     description: 'Set full version as a string (include prefix).'
   major:
