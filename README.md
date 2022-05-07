@@ -124,10 +124,9 @@ npm run test
 ### Package (must run before checked-in)
 
 ```shell
-npm run build
-npm run package
+npm run all
 git add dist/
-git commit -m"Packaged"
+git commit -m"Run build and package"
 ```
 
 ### Create pull request
