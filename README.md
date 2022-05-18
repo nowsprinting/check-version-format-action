@@ -126,7 +126,7 @@ npm run test
 ```shell
 npm run all
 git add dist/
-git commit -m"Run build and package"
+git commit -m"Update dist"
 ```
 
 ### Create pull request
