@@ -40,7 +40,7 @@ jobs:
 
       - name: Update major and latest branch # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
-          major=$(echo v"${{ steps.diff.outputs.version }}" | sed -r 's/(v[0-9]+).*/\1/')
+          major=$(echo v"${{ needs.check-bump-version.outputs.new-version }}" | sed -r 's/(v[0-9]+).*/\1/')
           git push --force origin "HEAD:refs/heads/$major"
           git push --force origin "HEAD:refs/heads/latest"
 
