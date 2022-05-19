@@ -43,3 +43,14 @@ jobs:
         run: |
           echo "Found stable version in tag!"
         if: steps.version.outputs.is_stable == 'true'
+
+  notification:
+    needs: [ build, test ]
+    if: failure()
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: Gamesight/slack-workflow-status@v1.1.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
