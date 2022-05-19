@@ -46,7 +46,7 @@ jobs:
 
   notification:
     needs: [ build, test ]
-    if: fail()
+    if: failure()
     runs-on: ubuntu-latest
 
     steps:
