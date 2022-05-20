@@ -44,7 +44,7 @@ jobs:
           echo "Found stable version in tag!"
         if: steps.version.outputs.is_stable == 'true'
 
-  notification:
+  notify:
     needs: [ build, test ]
     if: failure()
     runs-on: ubuntu-latest
