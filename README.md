@@ -139,7 +139,7 @@ Be grateful if you could label the PR as `enhancement`, `bug`, `chore` and `docu
 Bump version in package.json on default branch.
 Or run [Create release pull request](https://github.com/nowsprinting/check-version-format-action/actions/workflows/create-release-pr.yml) workflow and merge PR.
 
-Then, Will do the release process automatically by [Release when bump version](.github/workflows/release-when-bump-version.yml) workflow.
+Then, Will do the release process automatically by [Release](.github/workflows/release.yml) workflow.
 The GitHub Marketplace page will be updated based on the Release.
 
 Do **NOT** manually operation the following operations:
