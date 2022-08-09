@@ -15,10 +15,22 @@ outputs:
     description: '`true` if found stable version in tag. (not have pre-release metadata and major > 0)'
   full:
     description: 'Set full version as a string (include prefix).'
+  full_without_prefix:
+    description: 'Set full version as a string (exclude prefix).'
   major:
     description: 'Set major version as a string (include prefix).'
+  major_without_prefix:
+    description: 'Set major version as a string (exclude prefix).'
+  minor:
+    description: 'Set minor version as a string.'
+  patch:
+    description: 'Set patch version as a string.'
+  prerelease:
+    description: 'Set pre-release version as a string.'
   major_prerelease:
     description: 'Set major version with pre-release as a string (include prefix).'
+  major_prerelease_without_prefix:
+    description: 'Set major version with pre-release as a string (exclude prefix).'
 
 runs:
   using: 'node16'

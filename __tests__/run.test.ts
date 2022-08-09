@@ -65,16 +65,28 @@ describe.each`
 })
 
 describe.each`
-  prefix | ref                                         | full                              | major   | major_prerelease
-  ${`v`} | ${'refs/tags/v1.0.0'}                       | ${'v1.0.0'}                       | ${'v1'} | ${'v1'}
-  ${`v`} | ${'refs/tags/v2.3.4'}                       | ${'v2.3.4'}                       | ${'v2'} | ${'v2'}
-  ${`v`} | ${'refs/tags/v1.0.0-alpha'}                 | ${'v1.0.0-alpha'}                 | ${'v1'} | ${'v1-alpha'}
-  ${`v`} | ${'refs/tags/v2.3.4-beta5'}                 | ${'v2.3.4-beta5'}                 | ${'v2'} | ${'v2-beta5'}
-  ${``}  | ${'refs/tags/99.999.9999'}                  | ${'99.999.9999'}                  | ${'99'} | ${'99'}
-  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT'}         | ${'99.999.9999-SNAPSHOT'}         | ${'99'} | ${'99-SNAPSHOT'}
-  ${``}  | ${'refs/tags/99.999.9999+0354f3a'}          | ${'99.999.9999+0354f3a'}          | ${'99'} | ${'99'}
-  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT+0354f3a'} | ${'99.999.9999-SNAPSHOT+0354f3a'} | ${'99'} | ${'99-SNAPSHOT'}
-`('version string', ({prefix, ref, full, major, major_prerelease}) => {
+  prefix | ref                                         | full                              | major   | minor    | patch     | prerelease    | major_prerelease | full_without_prefix               | major_without_prefix | major_prerelease_without_prefix
+  ${`v`} | ${'refs/tags/v2.3.4'}                       | ${'v2.3.4'}                       | ${'v2'} | ${'3'}   | ${'4'}    | ${''}         | ${'v2'}          | ${'2.3.4'}                        | ${'2'}               | ${'2'}
+  ${`v`} | ${'refs/tags/v2.3.4-beta5'}                 | ${'v2.3.4-beta5'}                 | ${'v2'} | ${'3'}   | ${'4'}    | ${'beta5'}    | ${'v2-beta5'}    | ${'2.3.4-beta5'}                  | ${'2'}               | ${'2-beta5'}
+  ${``}  | ${'refs/tags/99.999.9999'}                  | ${'99.999.9999'}                  | ${'99'} | ${'999'} | ${'9999'} | ${''}         | ${'99'}          | ${'99.999.9999'}                  | ${'99'}              | ${'99'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT'}         | ${'99.999.9999-SNAPSHOT'}         | ${'99'} | ${'999'} | ${'9999'} | ${'SNAPSHOT'} | ${'99-SNAPSHOT'} | ${'99.999.9999-SNAPSHOT'}         | ${'99'}              | ${'99-SNAPSHOT'}
+  ${``}  | ${'refs/tags/99.999.9999+0354f3a'}          | ${'99.999.9999+0354f3a'}          | ${'99'} | ${'999'} | ${'9999'} | ${''}         | ${'99'}          | ${'99.999.9999+0354f3a'}          | ${'99'}              | ${'99'}
+  ${``}  | ${'refs/tags/99.999.9999-SNAPSHOT+0354f3a'} | ${'99.999.9999-SNAPSHOT+0354f3a'} | ${'99'} | ${'999'} | ${'9999'} | ${'SNAPSHOT'} | ${'99-SNAPSHOT'} | ${'99.999.9999-SNAPSHOT+0354f3a'} | ${'99'}              | ${'99-SNAPSHOT'}
+`(
+  'version string',
+  ({
+    prefix,
+    ref,
+    full,
+    major,
+    minor,
+    patch,
+    prerelease,
+    major_prerelease,
+    full_without_prefix,
+    major_without_prefix,
+    major_prerelease_without_prefix
+  }) => {
   test(`${ref}`, async () => {
     process.env['INPUT_PREFIX'] = prefix
     github.context.ref = ref
@@ -84,6 +96,12 @@ describe.each`
 
     expect(spy).toHaveBeenCalledWith('full', full)
     expect(spy).toHaveBeenCalledWith('major', major)
+    expect(spy).toHaveBeenCalledWith('minor', minor)
+    expect(spy).toHaveBeenCalledWith('patch', patch)
+    expect(spy).toHaveBeenCalledWith('prerelease', prerelease)
     expect(spy).toHaveBeenCalledWith('major_prerelease', major_prerelease)
+    expect(spy).toHaveBeenCalledWith('full_without_prefix', full_without_prefix)
+    expect(spy).toHaveBeenCalledWith('major_without_prefix', major_without_prefix)
+    expect(spy).toHaveBeenCalledWith('major_prerelease_without_prefix', major_prerelease_without_prefix)
   })
 })

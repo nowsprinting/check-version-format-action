@@ -53,6 +53,13 @@ Set full version as a string (include prefix).
 e.g. `v1.0.0`, `v2.3.4-beta5`
 
 
+### full_without_prefix
+
+Set full version as a string (exclude prefix).
+
+e.g. `1.0.0`, `2.3.4-beta5`
+
+
 ### major
 
 Set major version as a string (include prefix).
@@ -60,11 +67,46 @@ Set major version as a string (include prefix).
 e.g. `v1`, `v2`
 
 
+### major_without_prefix
+
+Set major version as a string (exclude prefix).
+
+e.g. `1`, `2`
+
+
+### minor
+
+Set minor version as a string.
+
+e.g. `0`, `3`
+
+
+### patch
+
+Set patch version as a string.
+
+e.g. `0`, `4`
+
+
+### prerelease
+
+Set pre-release version as a string.
+
+e.g. ``, `beta5`
+
+
 ### major_prerelease
 
 Set major version with pre-release as a string (include prefix).
 
 e.g. `v1`, `v2-beta5`
+
+
+### major_prerelease_without_prefix
+
+Set major version with pre-release as a string (exclude prefix).
+
+e.g. `1`, `2-beta5`
 
 
 ## Example usage
