@@ -87,21 +87,31 @@ describe.each`
     major_without_prefix,
     major_prerelease_without_prefix
   }) => {
-  test(`${ref}`, async () => {
-    process.env['INPUT_PREFIX'] = prefix
-    github.context.ref = ref
+    test(`${ref}`, async () => {
+      process.env['INPUT_PREFIX'] = prefix
+      github.context.ref = ref
 
-    const spy = jest.spyOn(core, 'setOutput')
-    await run()
+      const spy = jest.spyOn(core, 'setOutput')
+      await run()
 
-    expect(spy).toHaveBeenCalledWith('full', full)
-    expect(spy).toHaveBeenCalledWith('major', major)
-    expect(spy).toHaveBeenCalledWith('minor', minor)
-    expect(spy).toHaveBeenCalledWith('patch', patch)
-    expect(spy).toHaveBeenCalledWith('prerelease', prerelease)
-    expect(spy).toHaveBeenCalledWith('major_prerelease', major_prerelease)
-    expect(spy).toHaveBeenCalledWith('full_without_prefix', full_without_prefix)
-    expect(spy).toHaveBeenCalledWith('major_without_prefix', major_without_prefix)
-    expect(spy).toHaveBeenCalledWith('major_prerelease_without_prefix', major_prerelease_without_prefix)
-  })
-})
+      expect(spy).toHaveBeenCalledWith('full', full)
+      expect(spy).toHaveBeenCalledWith('major', major)
+      expect(spy).toHaveBeenCalledWith('minor', minor)
+      expect(spy).toHaveBeenCalledWith('patch', patch)
+      expect(spy).toHaveBeenCalledWith('prerelease', prerelease)
+      expect(spy).toHaveBeenCalledWith('major_prerelease', major_prerelease)
+      expect(spy).toHaveBeenCalledWith(
+        'full_without_prefix',
+        full_without_prefix
+      )
+      expect(spy).toHaveBeenCalledWith(
+        'major_without_prefix',
+        major_without_prefix
+      )
+      expect(spy).toHaveBeenCalledWith(
+        'major_prerelease_without_prefix',
+        major_prerelease_without_prefix
+      )
+    })
+  }
+)
