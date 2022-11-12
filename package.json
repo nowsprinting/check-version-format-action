@@ -1,6 +1,6 @@
 {
   "name": "check-version-format-action",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "private": true,
   "description": "Check and extract version format from tag.",
   "main": "lib/main.js",
