@@ -17,6 +17,7 @@ on:
     paths-ignore:
       - '**.md'
 
+permissions: write-all
 jobs:
   check-dist:
     runs-on: ubuntu-latest
