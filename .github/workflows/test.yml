@@ -27,10 +27,11 @@ jobs:
           node-version: 16
           cache: npm
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Run tests
-        run: |
-          npm install
-          npm run all
+        run: npm run all
 
   test:
     runs-on: ubuntu-latest
