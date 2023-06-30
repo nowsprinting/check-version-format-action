@@ -15,10 +15,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - uses: actions/checkout@v3
 
@@ -35,6 +37,9 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - uses: actions/checkout@v3
 
@@ -60,6 +65,8 @@ jobs:
     needs: [ build, test ]
     if: failure()
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
 
     steps:
       - uses: Gamesight/slack-workflow-status@v1.2.0
