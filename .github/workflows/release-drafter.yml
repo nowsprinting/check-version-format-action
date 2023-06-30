@@ -16,10 +16,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: GitHubSecurityLab/actions-permissions/monitor@main
-        with:
-          config: ${{ vars.PERMISSIONS_CONFIG }}
-
       - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter.yml
