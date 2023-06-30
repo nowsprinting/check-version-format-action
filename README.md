@@ -120,6 +120,8 @@ on:
 jobs:
   test-tag:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: nowsprinting/check-version-format-action@v3
@@ -154,7 +156,7 @@ Open an issue or create a pull request.
 ### Start developing
 
 ```shell
-npm ci
+npm install
 ```
 
 ### Run tests
