@@ -1,0 +1,29 @@
+# see https://github.com/k1LoW/octocov
+coverage:
+  if: true
+  paths:
+    - ./reports/coverage/lcov.info
+codeToTestRatio:
+  code:
+    - 'src/**/*.ts'
+  test:
+    - '__tests__/**/*.ts'
+testExecutionTime:
+  if: true
+diff:
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
+
+# Comment report to pull request
+comment:
+  if: is_pull_request
+
+# Add report to job summary page
+summary:
+  if: true
+
+# Store report to artifact
+report:
+  if: is_default_branch
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
