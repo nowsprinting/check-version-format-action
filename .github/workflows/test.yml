@@ -37,7 +37,7 @@ jobs:
         run: npm run all
 
       - name: Run octocov
-        uses: k1LoW/octocov-action@v0
+        uses: k1LoW/octocov-action@v1
 
   test:
     runs-on: ubuntu-latest
