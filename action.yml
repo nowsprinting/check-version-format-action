@@ -33,7 +33,7 @@ outputs:
     description: 'Set major version with pre-release as a string (exclude prefix).'
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 
 branding:
