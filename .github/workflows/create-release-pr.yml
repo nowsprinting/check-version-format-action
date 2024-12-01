@@ -4,6 +4,16 @@ name: Create release pull request
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
   create-release-pr:
     runs-on: ubuntu-latest
