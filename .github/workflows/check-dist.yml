@@ -36,9 +36,9 @@ jobs:
       actions: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4
         with:
           node-version: 20
           cache: npm
@@ -61,13 +61,13 @@ jobs:
         id: diff
 
       # If index.js was different than expected, upload the expected version as an artifact
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ failure() && steps.diff.conclusion == 'failure' }}
         with:
           name: dist
           path: dist/
 
-      - uses: 8398a7/action-slack@v3
+      - uses: 8398a7/action-slack@28ba43ae48961b90635b50953d216767a6bea486 # v3
         with:
           status: ${{ job.status }}
           fields: repo,message,job,pullRequest
