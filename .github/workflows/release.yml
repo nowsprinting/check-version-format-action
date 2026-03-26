@@ -11,7 +11,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: {}
+permissions: { }
 
 defaults:
   run:
@@ -19,8 +19,8 @@ defaults:
 
 jobs:
   check-bump-version:
-    if: github.repository_owner == 'nowsprinting' # Skip on forked repo
-    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.fork == false # Skip on public fork
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     permissions:
       contents: read
@@ -28,7 +28,7 @@ jobs:
       new-version: ${{ steps.diff.outputs.version }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 100
 
@@ -41,7 +41,7 @@ jobs:
   release:
     needs: check-bump-version
     if: ${{ needs.check-bump-version.outputs.new-version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     permissions:
       contents: write
@@ -57,20 +57,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Update major and latest branch # for GitHub Actions, see https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning
         run: |
           major=$(echo v"${{ needs.check-bump-version.outputs.new-version }}" | sed -r 's/(v[0-9]+).*/\1/')
           git push --force origin "HEAD:refs/heads/$major"
           git push --force origin "HEAD:refs/heads/latest"
-
-      - uses: 8398a7/action-slack@1750b5085f3ec60384090fb7c52965ef822e869e # v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,job,pullRequest
-          mention: here
-          if_mention: failure
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

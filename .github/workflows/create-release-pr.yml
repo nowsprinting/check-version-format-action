@@ -8,7 +8,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: {}
+permissions: { }
 
 defaults:
   run:
@@ -16,7 +16,7 @@ defaults:
 
 jobs:
   create-release-pr:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     permissions:
       contents: write
@@ -40,7 +40,7 @@ jobs:
           echo "version=$without_prefix" >> "$GITHUB_OUTPUT"
         id: next-version
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           ref: master
 
