@@ -10,7 +10,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: {}
+permissions: { }
 
 defaults:
   run:
@@ -18,8 +18,8 @@ defaults:
 
 jobs:
   release-drafter:
-    if: github.repository_owner == 'nowsprinting' # Skip on forked repo
-    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.fork == false # Skip on public fork
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     permissions:
       contents: write
